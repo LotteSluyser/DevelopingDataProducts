@@ -1,0 +1,67 @@
+---
+title: "Urine Analysis"
+author: "Lotte Sluyser"
+date: "13 oktober 2017"
+output:
+  ioslides_presentation:
+    logo: Urine_Analysis.png
+---
+
+##Introduction 
+###Goal of the Shinyapp Urine Analysis
+- This app compares the osmolarity (osmo) of urine with the conductivity (cond).
+- In the app the user can choose for a scatter plot or a line plot.
+- The impression arises that osmo and cond are correlated.
+
+###Data
+- The Urine Analysis Data were downloaded from the package boot.
+- The data contains 79 urine specimens that were analyzed to determine if certain physical characteristics of the urine might be related to the formation of calcium oxalate crystals.
+
+
+## The Shiny app location
+<div class="red2">
+The Shiny app can be found here:
+</div>
+https://lottesluyser.shinyapps.io/urine_analysis/
+
+## The code of ui.R {.smaller}
+### <b>
+library(boot);library(markdown);library(shiny)
+urinea<-urine[,c(4,5)]
+urinea<-urinea[order(urinea$osmo),]
+
+fluidPage(    
+        titlePanel("Urine Analysis"),
+         p("This app compares the osmolarity (osmo) of urine with the conductivity (cond).",
+          "Osmolarity is proportional to the concentration of molecules in a solution",
+          "and conductivity is proportional to the concentration of charged ions in the solution.",
+          "You can select the type of plot: scatterplot or line plot."),
+        
+sidebarLayout(
+                sidebarPanel(
+                            radioButtons("plotType", "Plot type",
+                                c("Scatter"="p","Line"='l')),
+                helpText("By L.Sluyser. Urine Analysis Data from                 R package boot")
+                ),            
+                mainPanel(
+                                    plotOutput("urinePlot")
+                            )))
+</b>
+
+## The code of server.R {.smaller}
+### <b>
+
+### Processing of the dataset from the package boot
+```{r, eval=TRUE}
+library(boot);library(shiny)
+urinea<-urine[,c(4,5)]
+urinea<-urinea[order(urinea$osmo),]
+```
+
+
+function(input, output){
+        output$urinePlot <- renderPlot({
+                plot(urinea, type=input$plotType)
+        })
+} 
+</b>

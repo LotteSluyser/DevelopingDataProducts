@@ -1,0 +1,10 @@
+name: urine_analysis
+title:
+username:
+account: lottesluyser
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 224836
+bundleId: 1024990
+url: https://lottesluyser.shinyapps.io/urine_analysis/
+when: 1507895984.71183
